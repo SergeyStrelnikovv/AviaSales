@@ -5,6 +5,7 @@ import ru.netology.exception.NotFoundException;
 import ru.netology.repository.FlightRepository;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class FlightManager {
     FlightRepository repository;
@@ -17,7 +18,7 @@ public class FlightManager {
         repository.save(item);
     }
 
-    public Flight[] searchByAirports(String from, String to) {
+    public Flight[] searchByAirports(String from, String to, Comparator<Flight> time) {
         Flight[] result = new Flight[0];
         for (Flight item : repository.findAll()) {
             if (item.matches(from, to)) {
@@ -27,7 +28,7 @@ public class FlightManager {
                 tmp[tmp.length - 1] = item;
                 result = tmp;
             }
-            Arrays.sort(result);
+            Arrays.sort(result, time);
         }
         return result;
     }
